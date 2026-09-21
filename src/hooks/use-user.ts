@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import type { User } from "@supabase/supabase-js";
+import type { User, Session, AuthChangeEvent } from "@supabase/supabase-js";
 
 export interface UserProfile {
   user: User | null;
@@ -26,36 +26,43 @@ export function useUser(): UserProfile {
     const supabase = createClient();
     let isMounted = true;
 
-    // 1. Fast path: Read active session from storage/cookie
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (!isMounted) return;
-      if (session?.user) {
-        setUser(session.user);
-        setIsLoading(false);
-      }
-    });
+    async function fetchUserData() {
+      try {
+        // 1. Fast path: Read active session from storage/cookie
+        const { data: sessionData } = await supabase.auth.getSession();
+        if (isMounted && sessionData?.session?.user) {
+          setUser(sessionData.session.user);
+          setIsLoading(false);
+        }
 
-    // 2. Validate current user with Supabase server
-    supabase.auth.getUser().then(({ data: { user: currentUser } }) => {
-      if (!isMounted) return;
-      if (currentUser) {
-        setUser(currentUser);
+        // 2. Validate current user with Supabase server
+        const { data: userData } = await supabase.auth.getUser();
+        if (isMounted && userData?.user) {
+          setUser(userData.user);
+        }
+      } catch {
+        // Silently handle any auth fetch error
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
       }
-      setIsLoading(false);
-    });
+    }
+
+    fetchUserData();
 
     // 3. Listen for real-time auth state transitions
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (!isMounted) return;
-      setUser(session?.user ?? null);
-      setIsLoading(false);
-    });
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      (_event: AuthChangeEvent, session: Session | null) => {
+        if (!isMounted) return;
+        setUser(session?.user ?? null);
+        setIsLoading(false);
+      }
+    );
 
     return () => {
       isMounted = false;
-      subscription.unsubscribe();
+      authListener?.subscription?.unsubscribe();
     };
   }, []);
 
