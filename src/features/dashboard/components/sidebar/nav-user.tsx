@@ -11,7 +11,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { logout } from "@/app/(auth)/actions";
-
+import { createClient } from "@/lib/supabase/client";
 import { useUser } from "@/hooks/use-user";
 
 export function NavUser({
@@ -36,6 +36,10 @@ export function NavUser({
 
   const handleSignOut = () => {
     startTransition(async () => {
+      try {
+        const supabase = createClient();
+        await supabase.auth.signOut();
+      } catch {}
       await logout();
     });
   };

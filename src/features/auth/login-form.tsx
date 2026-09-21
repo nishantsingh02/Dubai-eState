@@ -2,28 +2,53 @@
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Eye, EyeOff, Loader2, Mail, Lock, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
-import { login } from "@/app/(auth)/actions";
+import { createClient } from "@/lib/supabase/client";
 
 /**
  * LoginForm Component
  *
- * Email + password login form using a Next.js server action.
- * Refined with crisp light-styled inputs and high-energy CTA.
+ * Direct Supabase authentication with immediate state synchronization,
+ * error handling, and router navigation.
  */
 export function LoginForm() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [isPending, startTransition] = useTransition();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
+    const email = (formData.get("email") as string)?.trim();
+    const password = formData.get("password") as string;
+
+    if (!email || !password) {
+      toast.error("Please enter both email and password.");
+      return;
+    }
 
     startTransition(async () => {
-      const result = await login(formData);
-      if (result?.error) {
-        toast.error(result.error);
+      try {
+        const supabase = createClient();
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+
+        if (error) {
+          toast.error(error.message || "Failed to sign in. Please check your credentials.");
+          return;
+        }
+
+        if (data?.user) {
+          toast.success("Welcome back! Loading your dashboard...");
+          router.push("/dashboard/leads");
+          router.refresh();
+        }
+      } catch (err: any) {
+        toast.error(err?.message || "An unexpected error occurred during sign in.");
       }
     });
   };

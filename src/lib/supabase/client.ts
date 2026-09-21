@@ -1,12 +1,19 @@
 import { createBrowserClient } from "@supabase/ssr";
 
+let client: ReturnType<typeof createBrowserClient> | undefined;
+
 /**
- * Creates a Supabase client for use in browser/client components.
- * Uses the SSR package to handle cookies for session persistence.
+ * Creates or returns a singleton Supabase client for browser components.
+ * Singleton ensures auth listeners, in-memory tokens, and session state
+ * are synchronized across the entire client application.
  */
 export function createClient() {
-  return createBrowserClient(
+  if (client) return client;
+
+  client = createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
   );
+
+  return client;
 }

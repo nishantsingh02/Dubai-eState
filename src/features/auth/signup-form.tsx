@@ -2,17 +2,20 @@
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Eye, EyeOff, Loader2, Mail, Lock, User, CheckCircle2, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
-import { signup } from "@/app/(auth)/actions";
+import { createClient } from "@/lib/supabase/client";
 
 /**
  * SignupForm Component
  *
  * Full-name, email, password, confirm-password signup form.
- * Uses a Next.js server action and shows a success state after sign-up.
+ * Uses direct Supabase client to ensure user metadata (full_name)
+ * is recorded and immediately reflected on user profile.
  */
 export function SignupForm() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -22,8 +25,15 @@ export function SignupForm() {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
 
+    const email = (formData.get("email") as string)?.trim();
     const password = formData.get("password") as string;
     const confirm = formData.get("confirmPassword") as string;
+    const fullName = (formData.get("fullName") as string)?.trim();
+
+    if (!email || !password || !fullName) {
+      toast.error("Please fill in all fields.");
+      return;
+    }
 
     if (password !== confirm) {
       toast.error("Passwords do not match.");
@@ -36,11 +46,35 @@ export function SignupForm() {
     }
 
     startTransition(async () => {
-      const result = await signup(formData);
-      if (result?.error) {
-        toast.error(result.error);
-      } else {
-        setSuccess(true);
+      try {
+        const supabase = createClient();
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: {
+              full_name: fullName,
+              name: fullName,
+            },
+          },
+        });
+
+        if (error) {
+          toast.error(error.message || "Failed to create account.");
+          return;
+        }
+
+        // If session was established immediately (e.g. email confirmation off in Supabase)
+        if (data?.session) {
+          toast.success("Account created! Redirecting to your dashboard...");
+          router.push("/dashboard/leads");
+          router.refresh();
+        } else {
+          // Confirmation email sent
+          setSuccess(true);
+        }
+      } catch (err: any) {
+        toast.error(err?.message || "An unexpected error occurred during signup.");
       }
     });
   };
