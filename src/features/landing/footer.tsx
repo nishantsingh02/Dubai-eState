@@ -2,7 +2,7 @@
 
 // External imports
 import Link from "next/link";
-import { Zap } from "lucide-react";
+import { Building2 } from "lucide-react";
 
 // Internal imports
 import { XIcon, GitHubIcon, LinkedInIcon } from "@/components/icons";
@@ -35,26 +35,26 @@ const FooterLink = ({
 );
 
 /**
- * Navigation data for footer links
+ * Navigation data for footer links — PropEase specific
  */
 const navigation = {
   product: [
     { name: "Features", href: "#features" },
     { name: "Pricing", href: "#pricing" },
-    { name: "Testimonials", href: "#testimonials" },
-    { name: "API", href: "#" },
+    { name: "Agency Stories", href: "#testimonials" },
+    { name: "Live Dashboard", href: "/dashboard/leads" },
   ],
   company: [
     { name: "About", href: "#" },
     { name: "Blog", href: "#" },
     { name: "Careers", href: "#" },
-    { name: "Press", href: "#" },
+    { name: "Contact", href: "#" },
   ],
   support: [
-    { name: "Documentation", href: "#" },
-    { name: "Guides", href: "#" },
+    { name: "Import Guide", href: "#" },
     { name: "Help Center", href: "#" },
-    { name: "Contact", href: "#" },
+    { name: "API Docs", href: "#" },
+    { name: "Status", href: "#" },
   ],
   legal: [
     { name: "Privacy", href: "#" },
@@ -102,11 +102,11 @@ export function Footer() {
         aria-hidden="true"
       ></div>
       <div
-        className="bg-primary/10 absolute top-1/4 right-1/4 -z-10 h-64 w-64 rounded-full blur-3xl"
+        className="bg-orange-500/10 absolute top-1/4 right-1/4 -z-10 h-64 w-64 rounded-full blur-3xl"
         aria-hidden="true"
       ></div>
       <div
-        className="absolute bottom-1/4 left-1/4 -z-10 h-64 w-64 rounded-full bg-yellow-500/10 blur-3xl"
+        className="absolute bottom-1/4 left-1/4 -z-10 h-64 w-64 rounded-full bg-purple-500/10 blur-3xl"
         aria-hidden="true"
       ></div>
 
@@ -115,17 +115,18 @@ export function Footer() {
           <div className="space-y-8">
             <div className="flex items-center">
               <div
-                className="bg-primary/10 flex h-12 w-12 items-center justify-center rounded-lg"
+                className="flex h-12 w-12 items-center justify-center rounded-lg bg-orange-500"
                 aria-hidden="true"
               >
-                <Zap className="text-primary h-6 w-6" />
+                <Building2 className="h-6 w-6 text-white" />
               </div>
               <span className="ml-4 text-xl font-bold tracking-tight">
-                Piper
+                PropEase
               </span>
             </div>
             <p className="text-muted-foreground text-base">
-              Making customer relationships smarter, faster, and more human.
+              Dubai's AI-powered lead intelligence platform. Score every inquiry.
+              Revive every dormant lead. Close more deals.
             </p>
             <div className="flex space-x-5">
               {navigation.social.map((item) => (
@@ -191,7 +192,7 @@ export function Footer() {
         </div>
         <div className="border-border/50 mt-12 border-t pt-8">
           <p className="text-muted-foreground text-center text-sm">
-            &copy; {new Date().getFullYear()} Piper, Inc. All rights reserved.
+            &copy; {new Date().getFullYear()} PropEase. All rights reserved. Built for Dubai real estate agencies.
           </p>
         </div>
       </div>

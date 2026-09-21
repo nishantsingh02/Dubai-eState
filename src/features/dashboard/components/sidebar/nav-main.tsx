@@ -1,62 +1,64 @@
 "use client";
 
-// External dependencies
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { type LucideIcon } from "lucide-react";
-
-// Internal components and hooks
-import { useActiveMenu } from "@/hooks/use-active-menu";
-import { Collapsible } from "@/components/ui/collapsible";
+import { cn } from "@/lib/utils";
 import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { SidebarMenuWrapper } from "./sidebar-menu-wrapper";
 
-/**
- * Props interface for NavMain component
- * @interface NavMainProps
- * @property {Object[]} items - Array of navigation items
- * @property {string} items[].title - Title of the navigation item
- * @property {string} items[].url - URL for the navigation item
- * @property {LucideIcon} items[].icon - Icon component for the navigation item
- * @property {Object[]} [items[].items] - Optional sub-items for the navigation item
- */
 interface NavMainProps {
   items: {
     title: string;
     url: string;
     icon: LucideIcon;
-    items?: {
-      title: string;
-      url: string;
-    }[];
   }[];
 }
 
-/**
- * NavMain Component
- *
- * Primary navigation section in the dashboard sidebar.
- * Displays main platform navigation links with collapsible sub-items.
- */
 export function NavMain({ items }: NavMainProps) {
-  const { activeItems } = useActiveMenu(items);
+  const pathname = usePathname();
 
   return (
-    <SidebarGroup aria-label="Platform navigation">
-      <SidebarGroupLabel>Platform</SidebarGroupLabel>
-      <SidebarMenu>
-        {activeItems.map((item) => (
-          <Collapsible
-            key={item.title}
-            asChild
-            defaultOpen={item.isActive}
-            className="hover:bg-transparent"
-          >
-            <SidebarMenuWrapper key={item.url} item={item} />
-          </Collapsible>
-        ))}
+    <SidebarGroup aria-label="Lead Intelligence Navigation">
+      <SidebarGroupLabel className="text-xs font-medium uppercase tracking-wider text-muted-foreground/70">
+        Menu
+      </SidebarGroupLabel>
+      <SidebarMenu className="gap-1.5">
+        {items.map((item) => {
+          const isActive =
+            pathname === item.url ||
+            (item.url !== "/dashboard" && pathname.startsWith(item.url));
+
+          return (
+            <SidebarMenuItem key={item.url}>
+              <SidebarMenuButton
+                asChild
+                tooltip={item.title}
+                className={cn(
+                  "h-10 rounded-xl px-3 text-sm font-medium transition-all duration-200",
+                  isActive
+                    ? "bg-white text-orange-600 font-semibold shadow-sm border border-orange-100/60 dark:bg-zinc-900 dark:text-orange-500 dark:border-zinc-800"
+                    : "text-muted-foreground hover:bg-black/5 hover:text-foreground dark:hover:bg-white/5"
+                )}
+              >
+                <Link href={item.url} className="flex items-center gap-3">
+                  <item.icon
+                    className={cn(
+                      "size-4 shrink-0 transition-colors",
+                      isActive ? "text-orange-600 dark:text-orange-500" : "text-muted-foreground"
+                    )}
+                  />
+                  <span>{item.title}</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          );
+        })}
       </SidebarMenu>
     </SidebarGroup>
   );

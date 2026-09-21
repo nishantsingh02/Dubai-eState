@@ -30,6 +30,7 @@ interface LeadsTableProps {
   pagination: PaginationState;
   onPaginationChange: OnChangeFn<PaginationState>;
   pageCount: number;
+  onSelectLead: (lead: Lead) => void;
 }
 
 export function LeadsTable({
@@ -40,8 +41,9 @@ export function LeadsTable({
   pagination,
   onPaginationChange,
   pageCount,
+  onSelectLead,
 }: LeadsTableProps) {
-  const columns = useLeadColumns();
+  const columns = useLeadColumns({ onSelectLead });
 
   const table = useReactTable({
     data: leads,
@@ -61,41 +63,47 @@ export function LeadsTable({
 
   return (
     <div className="space-y-4">
-      <Table>
-        <TableHeader>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <LeadsTableHeaderCell key={header.id} header={header} />
-              ))}
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows.length ? (
-            table.getRowModel().rows.map((row) => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && "selected"}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
+      <div className="rounded-xl border border-border/80 bg-card overflow-hidden">
+        <Table>
+          <TableHeader className="bg-muted/40">
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id} className="hover:bg-transparent">
+                {headerGroup.headers.map((header) => (
+                  <LeadsTableHeaderCell key={header.id} header={header} />
                 ))}
               </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-      <Separator />
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                  className="hover:bg-muted/50 transition-colors"
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id} className="py-3 px-4">
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-32 text-center text-muted-foreground"
+                >
+                  No leads matching current criteria.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
+      <Separator className="bg-border/60" />
       <LeadsTablePagination table={table} totalRows={totalRows} />
     </div>
   );
-} 
+}

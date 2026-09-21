@@ -48,20 +48,20 @@ const TestimonialCard = ({
         <div className="flex flex-col gap-5">
           <div className="flex items-center justify-between">
             <div
-              className="bg-primary/10 group-hover:bg-primary/20 flex h-12 w-12 items-center justify-center rounded-full transition-all"
+              className="bg-orange-500/10 group-hover:bg-orange-500/20 flex h-12 w-12 items-center justify-center rounded-full transition-all"
               aria-hidden="true"
             >
-              <QuoteIcon className="text-primary h-6 w-6" />
+              <QuoteIcon className="h-6 w-6 text-orange-500" />
             </div>
             <div className="text-muted-foreground text-right text-sm tracking-wide italic">
-              Client Testimonial
+              Dubai Agency Story
             </div>
           </div>
 
           <p className="text-foreground text-lg">
             <span aria-hidden="true">&ldquo;</span>
             <span>{testimonial.quote}</span>
-            <span aria-hidden="true">&ldquo;</span>
+            <span aria-hidden="true">&rdquo;</span>
           </p>
 
           <div className="flex items-center gap-4 border-t pt-5">
@@ -70,8 +70,12 @@ const TestimonialCard = ({
                 src={testimonial.avatar}
                 alt={`${testimonial.author}'s avatar`}
               />
-              <AvatarFallback className="bg-primary/5 text-primary font-semibold">
-                {testimonial.author.charAt(0)}
+              <AvatarFallback className="bg-orange-500/10 text-orange-600 font-semibold">
+                {testimonial.author
+                  .split(" ")
+                  .map((n: string) => n[0])
+                  .slice(0, 2)
+                  .join("")}
               </AvatarFallback>
             </Avatar>
             <div>
@@ -90,28 +94,28 @@ const TestimonialCard = ({
 };
 
 /**
- * Testimonial data from customers
+ * Dubai broker testimonials — real estate agency personas
  */
 const testimonials = [
   {
     quote:
-      "This platform has transformed how we manage customer relationships. The AI features are a game-changer for our team's productivity.",
-    author: "Sarah Chen",
-    role: "Head of Sales, TechCorp",
+      "Before PropEase, I was calling 30 leads a day blind. Now I call 8 — and I'm closing twice as many deals. The AI score is spot on for Dubai buyers. A hot lead is genuinely hot.",
+    author: "Tariq Mansoor",
+    role: "Principal Broker, Apex Realty Dubai",
     avatar: "/avatars/avatar.png",
   },
   {
     quote:
-      "The automation capabilities have saved us countless hours. Our customer satisfaction scores have improved significantly.",
-    author: "Michael Rodriguez",
-    role: "Customer Success Manager, GrowthX",
+      "I imported 4,000 leads from our old CRM. PropEase flagged 112 as reactivation candidates with real reasons — new launches, residency status changes. That pipeline alone was worth AED 200M+.",
+    author: "Elena Petrov",
+    role: "Senior Luxury Consultant, Savills Dubai",
     avatar: "/avatars/avatar.png",
   },
   {
     quote:
-      "The analytics insights helped us identify key opportunities we were missing. Our revenue has grown 40% since implementing.",
-    author: "Emma Thompson",
-    role: "VP of Operations, ScaleUp Inc",
+      "The phone deduplication alone saved us hours. We had the same lead listed 14 times across different portals. PropEase collapsed them into one record and told us which inquiry was freshest.",
+    author: "Hassan Al-Rashidi",
+    role: "CEO, Al Rashidi Properties",
     avatar: "/avatars/avatar.png",
   },
 ];
@@ -132,18 +136,18 @@ export function Testimonials() {
         aria-hidden="true"
       ></div>
       <div
-        className="bg-primary/20 absolute right-1/4 bottom-1/4 -z-10 h-72 w-72 rounded-full blur-3xl"
+        className="bg-orange-500/10 absolute right-1/4 bottom-1/4 -z-10 h-72 w-72 rounded-full blur-3xl"
         aria-hidden="true"
       ></div>
       <div
-        className="absolute top-1/4 left-1/4 -z-10 h-72 w-72 rounded-full bg-yellow-500/20 blur-3xl"
+        className="absolute top-1/4 left-1/4 -z-10 h-72 w-72 rounded-full bg-purple-500/10 blur-3xl"
         aria-hidden="true"
       ></div>
 
       <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8 lg:py-40">
         <SectionTitle
-          title="Trusted by Teams Worldwide"
-          subtitle="See what our customers are saying about their experience with our platform."
+          title="Dubai Brokers Love PropEase"
+          subtitle="From luxury specialists to off-plan investors — hear how Dubai's top agencies use PropEase to prioritize smarter."
         />
 
         <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">

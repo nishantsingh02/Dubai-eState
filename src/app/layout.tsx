@@ -6,9 +6,9 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/providers/theme-provider";
 
 export const metadata: Metadata = {
-  title: "Piper - Customer Relationship Management",
+  title: "PropEase — Dubai Lead Intelligence for Real Estate Agencies",
   description:
-    "CRM dashboard for managing customer relationships using Next.js, Shadcn UI",
+    "AI-powered lead scoring and prioritization for Dubai real estate agencies. Score every inquiry 0–100, revive dormant leads, and know exactly who to call first.",
 };
 
 export default function RootLayout({

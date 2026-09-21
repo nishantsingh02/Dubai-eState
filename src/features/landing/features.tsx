@@ -2,20 +2,20 @@
 
 // External imports
 import {
-  BarChart3,
-  BrainCircuit,
-  Inbox,
-  LayoutDashboard,
-  MessagesSquare,
+  FileSpreadsheet,
   Sparkles,
-  TimerReset,
-  UserCheck,
-  Users2,
-  Zap,
+  RotateCcw,
+  Phone,
+  ShieldCheck,
+  Building2,
+  BrainCircuit,
+  MapPin,
+  Clock,
+  DollarSign,
 } from "lucide-react";
 
 // Internal imports
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardTitle } from "@/components/ui/card";
 
 /**
  * SectionTitle component for consistent headings across sections
@@ -72,56 +72,56 @@ const FeatureCard = ({ feature, index }: { feature: any; index: number }) => {
 };
 
 /**
- * Features data array containing all product features with their details
+ * PropEase V1 feature cards — the 6 core capabilities
  */
 const features = [
   {
-    title: "Smart Inbox",
+    title: "AI Lead Scoring",
     description:
-      "AI-powered email management that automatically categorizes, prioritizes, and suggests responses.",
-    icon: <Inbox className="h-7 w-7" aria-hidden="true" />,
-    bgColor: "rgba(59, 130, 246, 0.1)",
-    textColor: "rgb(59, 130, 246)",
-  },
-  {
-    title: "Pipeline Analytics",
-    description:
-      "Real-time insights into your sales pipeline with AI-driven forecasting and recommendations.",
-    icon: <BarChart3 className="h-7 w-7" aria-hidden="true" />,
-    bgColor: "rgba(234, 179, 8, 0.1)",
-    textColor: "rgb(234, 179, 8)",
-  },
-  {
-    title: "Intelligent Automation",
-    description:
-      "Automate repetitive tasks and workflows with our powerful but easy-to-use automation engine.",
-    icon: <Zap className="h-7 w-7" aria-hidden="true" />,
-    bgColor: "rgba(168, 85, 247, 0.1)",
-    textColor: "rgb(168, 85, 247)",
-  },
-  {
-    title: "Customer Insights",
-    description:
-      "Get a 360° view of your customers with aggregated data from all touchpoints and interactions.",
-    icon: <UserCheck className="h-7 w-7" aria-hidden="true" />,
-    bgColor: "rgba(34, 197, 94, 0.1)",
-    textColor: "rgb(34, 197, 94)",
-  },
-  {
-    title: "Team Collaboration",
-    description:
-      "Work seamlessly with your team through shared workspaces, comments, and real-time updates.",
-    icon: <Users2 className="h-7 w-7" aria-hidden="true" />,
+      "Every lead is scored 0–100 by buyer intent, budget clarity, area specificity, and closing urgency. Hot / Warm / Cold tags assigned automatically.",
+    icon: <Sparkles className="h-7 w-7" aria-hidden="true" />,
     bgColor: "rgba(249, 115, 22, 0.1)",
     textColor: "rgb(249, 115, 22)",
   },
   {
-    title: "Interactive Dashboard",
+    title: "Reactivation Engine",
     description:
-      "Customizable dashboards that display your most important metrics and KPIs at a glance.",
-    icon: <LayoutDashboard className="h-7 w-7" aria-hidden="true" />,
+      "AI flags dormant leads worth reviving when market events, new launches, or buyer signals create a high-probability window.",
+    icon: <RotateCcw className="h-7 w-7" aria-hidden="true" />,
+    bgColor: "rgba(168, 85, 247, 0.1)",
+    textColor: "rgb(168, 85, 247)",
+  },
+  {
+    title: "CSV & Excel Import",
+    description:
+      "Upload messy real-world files (.csv, .xlsx, .xls). Handles Arabic text, mixed encodings, empty rows, and inconsistent date formats without crashing.",
+    icon: <FileSpreadsheet className="h-7 w-7" aria-hidden="true" />,
+    bgColor: "rgba(34, 197, 94, 0.1)",
+    textColor: "rgb(34, 197, 94)",
+  },
+  {
+    title: "Smart Column Mapping",
+    description:
+      "Auto-detects common CRM headers (name, phone, channel, budget, date). Confirm or fix the mapping before a single lead is imported.",
+    icon: <ShieldCheck className="h-7 w-7" aria-hidden="true" />,
     bgColor: "rgba(14, 165, 233, 0.1)",
     textColor: "rgb(14, 165, 233)",
+  },
+  {
+    title: "UAE Phone Deduplication",
+    description:
+      "Normalizes all Dubai phone formats to E.164 (+971). Deduplicates across your entire workspace so you never score the same lead twice.",
+    icon: <Phone className="h-7 w-7" aria-hidden="true" />,
+    bgColor: "rgba(234, 179, 8, 0.1)",
+    textColor: "rgb(234, 179, 8)",
+  },
+  {
+    title: "Multi-Tenant Workspaces",
+    description:
+      "Each agency gets its own isolated workspace. Row-level security ensures no broker can ever see another org's leads.",
+    icon: <Building2 className="h-7 w-7" aria-hidden="true" />,
+    bgColor: "rgba(99, 102, 241, 0.1)",
+    textColor: "rgb(99, 102, 241)",
   },
 ];
 
@@ -141,18 +141,18 @@ export function Features() {
         aria-hidden="true"
       ></div>
       <div
-        className="absolute top-1/4 left-1/4 -z-10 h-64 w-64 rounded-full bg-purple-500/20 blur-3xl"
+        className="absolute top-1/4 left-1/4 -z-10 h-64 w-64 rounded-full bg-orange-500/10 blur-3xl"
         aria-hidden="true"
       ></div>
       <div
-        className="absolute right-1/4 bottom-1/4 -z-10 h-72 w-72 rounded-full bg-blue-500/20 blur-3xl"
+        className="absolute right-1/4 bottom-1/4 -z-10 h-72 w-72 rounded-full bg-purple-500/10 blur-3xl"
         aria-hidden="true"
       ></div>
 
       <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8 lg:py-40">
         <SectionTitle
           title="Powerful Features"
-          subtitle="Everything you need to manage relationships, close deals, and grow your business effectively."
+          subtitle="Everything Dubai real estate brokers need to know which leads to call first — and which dormant leads to revive."
         />
 
         <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -161,56 +161,57 @@ export function Features() {
           ))}
         </div>
 
-        {/* Feature highlight */}
+        {/* Feature highlight — Dubai real estate AI context */}
         <div className="border-border/50 bg-background/50 mt-24 rounded-xl border p-8 lg:p-10">
           <div className="flex flex-col gap-8 md:flex-row md:items-center md:gap-12">
             <div
-              className="bg-primary/10 flex h-20 w-20 items-center justify-center rounded-lg md:h-24 md:w-24"
+              className="flex h-20 w-20 items-center justify-center rounded-lg bg-orange-500/10 md:h-24 md:w-24"
               aria-hidden="true"
             >
-              <BrainCircuit className="text-primary h-10 w-10 md:h-12 md:w-12" />
+              <BrainCircuit className="h-10 w-10 text-orange-500 md:h-12 md:w-12" />
             </div>
             <div className="flex-1">
               <h3 className="text-2xl font-bold tracking-tight">
-                AI-POWERED ASSISTANCE
+                WHY AI SCORING WORKS FOR DUBAI REAL ESTATE
               </h3>
               <p className="text-muted-foreground mt-4 text-lg">
-                Our advanced AI helps you make better decisions by analyzing
-                customer data, predicting outcomes, and suggesting next best
-                actions. Focus on building relationships while our AI handles
-                the repetitive tasks.
+                PropEase's AI is trained on Dubai-specific intent signals — not generic CRM data.
+                It scores on what actually predicts a sale: stated budget in AED, area specificity
+                (Marina vs JVC vs Palm), off-plan vs secondary preference, timeline urgency, and
+                engagement responsiveness. Every score comes with a 1–2 sentence reason your broker
+                can act on immediately.
               </p>
 
               <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
                 <div className="flex items-center gap-2">
                   <span
-                    className="bg-primary/10 flex h-8 w-8 items-center justify-center rounded-full"
+                    className="flex h-8 w-8 items-center justify-center rounded-full bg-orange-500/10"
                     aria-hidden="true"
                   >
-                    <Sparkles className="text-primary h-4 w-4" />
+                    <DollarSign className="h-4 w-4 text-orange-500" />
                   </span>
                   <span className="text-sm font-medium">
-                    Predictive insights
+                    Budget clarity (AED)
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span
-                    className="bg-primary/10 flex h-8 w-8 items-center justify-center rounded-full"
+                    className="flex h-8 w-8 items-center justify-center rounded-full bg-orange-500/10"
                     aria-hidden="true"
                   >
-                    <MessagesSquare className="text-primary h-4 w-4" />
+                    <MapPin className="h-4 w-4 text-orange-500" />
                   </span>
-                  <span className="text-sm font-medium">Smart responses</span>
+                  <span className="text-sm font-medium">Area specificity</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span
-                    className="bg-primary/10 flex h-8 w-8 items-center justify-center rounded-full"
+                    className="flex h-8 w-8 items-center justify-center rounded-full bg-orange-500/10"
                     aria-hidden="true"
                   >
-                    <TimerReset className="text-primary h-4 w-4" />
+                    <Clock className="h-4 w-4 text-orange-500" />
                   </span>
                   <span className="text-sm font-medium">
-                    Time-saving automations
+                    Timeline urgency signals
                   </span>
                 </div>
               </div>

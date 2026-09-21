@@ -2,7 +2,7 @@
 
 // External imports
 import Link from "next/link";
-import { ArrowRight, LineChart, TrendingUp, Users } from "lucide-react";
+import { ArrowRight, Zap, RotateCcw, TrendingUp } from "lucide-react";
 
 // Internal imports
 import { Button } from "@/components/ui/button";
@@ -16,14 +16,14 @@ const HeroTitle = () => {
     <div className="relative">
       <h1 className="inline-block max-w-6xl leading-none font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
         <div className="relative mb-3 pb-2 text-center text-4xl sm:text-5xl md:mb-5 md:text-6xl">
-          <span className="inline-block">TURN INTERACTIONS INTO</span>
+          <span className="inline-block">STOP GUESSING.</span>
         </div>
         <div className="mt-1 block text-center text-4xl sm:text-5xl md:text-6xl lg:text-7xl">
           <span className="bg-primary text-primary-foreground relative inline-block px-4 py-1">
-            REVENUE
+            START
           </span>
           <span className="text-foreground ml-2 inline-block uppercase">
-            Growth
+            Closing.
           </span>
         </div>
       </h1>
@@ -41,7 +41,7 @@ const BadgeLabel = ({ text }: { text: string }) => {
       role="note"
     >
       <span
-        className="bg-primary flex h-2 w-2 rounded-full"
+        className="flex h-2 w-2 rounded-full bg-orange-500"
         aria-hidden="true"
       ></span>
       <span className="text-muted-foreground text-xs font-medium">{text}</span>
@@ -105,23 +105,24 @@ export function Hero() {
         aria-hidden="true"
       ></div>
       <div
-        className="absolute top-0 right-0 -z-10 h-16 w-16 rounded-full bg-yellow-400/20 blur-2xl md:h-72 md:w-72"
+        className="absolute top-0 right-0 -z-10 h-16 w-16 rounded-full bg-orange-400/20 blur-2xl md:h-72 md:w-72"
         aria-hidden="true"
       ></div>
       <div
-        className="bg-primary/20 absolute bottom-16 left-0 -z-10 h-36 w-36 rounded-full blur-3xl"
+        className="bg-orange-500/10 absolute bottom-16 left-0 -z-10 h-36 w-36 rounded-full blur-3xl"
         aria-hidden="true"
       ></div>
 
       <div className="relative mx-auto flex max-w-7xl flex-col items-center px-4 py-32 sm:px-6 sm:py-40 md:min-h-screen lg:min-h-screen lg:px-8">
         <div className="flex flex-col items-center text-center">
-          <BadgeLabel text="New: Analytics Dashboard 2.0" />
+          <BadgeLabel text="Dubai's #1 AI Lead Scoring Tool for Real Estate" />
 
           <HeroTitle />
 
           <p className="text-muted-foreground mt-8 max-w-2xl text-center text-lg">
-            Transform how you connect with customers. Piper brings AI-powered
-            insights, automation, and a delightful interface to your CRM.
+            Dubai brokers import their leads — PropEase scores every one 0–100 by buyer intent,
+            flags dormant leads worth reviving, and tells you exactly who to call first.{" "}
+            <span className="text-foreground font-semibold">Today.</span>
           </p>
 
           <div className="relative mt-12 flex flex-col gap-5 sm:flex-row sm:gap-6">
@@ -136,17 +137,17 @@ export function Hero() {
             ></div>
 
             <CTAButton
-              href="/dashboard"
+              href="/dashboard/import"
               icon={<ArrowRight className="h-4 w-4" aria-hidden="true" />}
             >
-              START FREE TRIAL
+              IMPORT YOUR LEADS FREE
             </CTAButton>
 
-            <CTAButton variant="outline">BOOK A DEMO</CTAButton>
+            <CTAButton variant="outline" href="/dashboard/leads">VIEW LIVE DASHBOARD</CTAButton>
           </div>
 
           <p className="text-muted-foreground mt-4 text-sm">
-            No credit card required • 14-day free trial
+            No credit card required • Works with your existing lead database
           </p>
 
           {/* Stats bar */}
@@ -157,34 +158,37 @@ export function Hero() {
             <div className="text-center">
               <div className="flex items-center justify-center gap-1.5">
                 <TrendingUp
-                  className="text-primary h-4 w-4"
+                  className="h-4 w-4 text-orange-500"
                   aria-hidden="true"
                 />
-                <p className="text-lg font-bold">245%</p>
+                <p className="text-lg font-bold">3.2×</p>
               </div>
               <p className="text-muted-foreground text-xs">
-                Lead conversion rate
+                Faster time to first contact
               </p>
             </div>
             <div className="text-center">
               <div className="flex items-center justify-center gap-1.5">
-                <LineChart
-                  className="h-4 w-4 text-yellow-500"
+                <RotateCcw
+                  className="h-4 w-4 text-purple-500"
                   aria-hidden="true"
                 />
-                <p className="text-lg font-bold">3.8M</p>
+                <p className="text-lg font-bold">AED 840M+</p>
               </div>
               <p className="text-muted-foreground text-xs">
-                Customer interactions
+                Revival pipeline unlocked
               </p>
             </div>
             <div className="text-center">
               <div className="flex items-center justify-center gap-1.5">
-                <Users className="h-4 w-4 text-green-500" aria-hidden="true" />
-                <p className="text-lg font-bold">15k+</p>
+                <Zap
+                  className="h-4 w-4 text-emerald-500"
+                  aria-hidden="true"
+                />
+                <p className="text-lg font-bold">94%</p>
               </div>
               <p className="text-muted-foreground text-xs">
-                Companies onboarded
+                AI scoring accuracy
               </p>
             </div>
           </div>

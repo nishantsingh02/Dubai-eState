@@ -3,7 +3,7 @@
 // External imports
 import Link from "next/link";
 import { useState } from "react";
-import { Menu, Zap } from "lucide-react";
+import { Menu, Building2 } from "lucide-react";
 
 // Internal imports
 import { Button } from "@/components/ui/button";
@@ -61,14 +61,14 @@ export function Header() {
               <Link
                 href="/"
                 className="group flex items-center gap-2.5"
-                aria-label="Piper homepage"
+                aria-label="PropEase homepage"
               >
                 <div className="flex items-center gap-2">
-                  <div className="bg-primary/10 flex h-8 w-8 items-center justify-center rounded-full">
-                    <Zap className="text-primary h-4 w-4" aria-hidden="true" />
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-orange-500">
+                    <Building2 className="h-4 w-4 text-white" aria-hidden="true" />
                   </div>
                   <span className="text-lg font-bold tracking-tight">
-                    Piper
+                    PropEase
                   </span>
                 </div>
               </Link>
@@ -88,12 +88,14 @@ export function Header() {
 
               {/* Desktop CTA */}
               <div className="hidden items-center gap-3 md:flex">
-                <Button variant="ghost" className="font-medium tracking-wide">
-                  Sign in
-                </Button>
-                <Link href="/dashboard">
-                  <Button className="px-4 font-medium tracking-wide">
-                    Get Started
+                <Link href="/dashboard/leads">
+                  <Button variant="ghost" className="font-medium tracking-wide">
+                    Login
+                  </Button>
+                </Link>
+                <Link href="/dashboard/import">
+                  <Button className="bg-orange-500 hover:bg-orange-600 text-white px-4 font-medium tracking-wide rounded-full">
+                    Start Free Trial
                   </Button>
                 </Link>
 
@@ -148,19 +150,21 @@ export function Header() {
                 );
               })}
               <div className="border-border/50 mt-6 grid grid-cols-2 gap-3 border-t pt-6">
-                <Button
-                  variant="outline"
-                  className="w-full font-medium tracking-wide"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Sign in
-                </Button>
-                <Link href="/dashboard" className="w-full">
+                <Link href="/dashboard/leads" className="w-full">
                   <Button
+                    variant="outline"
                     className="w-full font-medium tracking-wide"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    Get Started
+                    Login
+                  </Button>
+                </Link>
+                <Link href="/dashboard/import" className="w-full">
+                  <Button
+                    className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium tracking-wide"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Start Free Trial
                   </Button>
                 </Link>
               </div>

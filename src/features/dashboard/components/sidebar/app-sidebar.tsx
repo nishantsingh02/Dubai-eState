@@ -1,14 +1,10 @@
 "use client";
 
-// External dependencies
 import * as React from "react";
 import Link from "next/link";
-import { Zap } from "lucide-react";
+import { Building2 } from "lucide-react";
 
-// Internal components
 import { NavMain } from "@/features/dashboard/components/sidebar/nav-main";
-import { NavWorkspace } from "@/features/dashboard/components/sidebar/nav-workspace";
-import { NavSecondary } from "@/features/dashboard/components/sidebar/nav-secondary";
 import { NavUser } from "@/features/dashboard/components/sidebar/nav-user";
 import {
   Sidebar,
@@ -22,17 +18,9 @@ import {
 } from "@/components/ui/sidebar";
 import { sidebarMenus } from "@/data/sidebar-menus";
 
-/**
- * AppSidebar Component
- *
- * Main application sidebar with navigation sections for the dashboard.
- * Includes app logo/header, main navigation, workspace selection,
- * secondary links, and user profile.
- */
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { open } = useSidebar();
 
-  // Persist sidebar open state in localStorage
   React.useEffect(() => {
     localStorage.setItem("sidebar-open", open.toString());
   }, [open]);
@@ -44,36 +32,40 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       {...props}
       aria-label="Main navigation"
     >
-      <SidebarHeader>
+      <SidebarHeader className="border-b border-border/40 pb-3">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild>
+            <SidebarMenuButton size="lg" asChild className="hover:bg-transparent">
               <Link
-                href="/dashboard"
-                className="hover:bg-transparent"
-                aria-label="Go to dashboard home"
+                href="/dashboard/leads"
+                className="flex items-center gap-3"
+                aria-label="PropEase Home"
               >
                 <div
-                  className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg"
+                  className="flex aspect-square size-9 items-center justify-center rounded-xl bg-orange-500 text-white shadow-sm shadow-orange-500/30"
                   aria-hidden="true"
                 >
-                  <Zap className="size-4" />
+                  <Building2 className="size-5" />
                 </div>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">Piper</span>
-                  <span className="truncate text-xs">Enterprise</span>
+                <div className="grid flex-1 text-left leading-tight">
+                  <span className="truncate font-bold tracking-tight text-base text-foreground">
+                    PropEase
+                  </span>
+                  <span className="truncate text-xs text-muted-foreground font-medium">
+                    Dubai Lead Intelligence
+                  </span>
                 </div>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-      <SidebarContent>
+
+      <SidebarContent className="py-2">
         <NavMain items={sidebarMenus.navMain} />
-        <NavWorkspace workspaces={sidebarMenus.workspaces} />
-        <NavSecondary items={sidebarMenus.navSecondary} className="mt-auto" />
       </SidebarContent>
-      <SidebarFooter>
+
+      <SidebarFooter className="border-t border-border/40 pt-2">
         <NavUser user={sidebarMenus.user} />
       </SidebarFooter>
     </Sidebar>

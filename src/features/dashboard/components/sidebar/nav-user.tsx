@@ -1,46 +1,16 @@
 "use client";
 
-// External dependencies
-import {
-  BadgeCheck,
-  Bell,
-  ChevronsUpDown,
-  CreditCard,
-  LogOut,
-  Sparkles,
-} from "lucide-react";
+import { LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
-
-// Internal components
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { ModeToggle } from "@/components/mode-toggle";
 import {
   SidebarMenu,
-  SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
 
-/**
- * NavUser Component
- *
- * User profile section in the dashboard sidebar footer.
- * Displays user information and provides a dropdown with user-related actions.
- *
- * @param {Object} props - Component props
- * @param {Object} props.user - User information
- * @param {string} props.user.name - User's name
- * @param {string} props.user.email - User's email
- * @param {string} props.user.avatar - URL to user's avatar image
- */
 export function NavUser({
   user,
 }: {
@@ -48,102 +18,74 @@ export function NavUser({
     name: string;
     email: string;
     avatar: string;
+    workspace?: string;
   };
 }) {
   const router = useRouter();
-  const { isMobile } = useSidebar();
+  const { state } = useSidebar();
+  const isCollapsed = state === "collapsed";
 
-  const signOut = () => {
-    router.push("/");
+  const handleSignOut = () => {
+    router.push("/login");
   };
+
+  if (isCollapsed) {
+    return (
+      <div className="flex flex-col items-center gap-2 py-2">
+        <Avatar className="h-8 w-8 rounded-lg">
+          <AvatarImage src={user.avatar} alt={user.name} />
+          <AvatarFallback className="rounded-lg text-xs font-semibold bg-orange-500/10 text-orange-600">
+            {user.name.substring(0, 2).toUpperCase()}
+          </AvatarFallback>
+        </Avatar>
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={handleSignOut}
+          className="h-8 w-8 text-muted-foreground hover:text-destructive"
+          title="Sign out"
+        >
+          <LogOut className="h-4 w-4" />
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <SidebarMenu>
       <SidebarMenuItem>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <SidebarMenuButton
-              size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground cursor-pointer hover:bg-transparent hover:font-bold hover:underline hover:underline-offset-4"
-              aria-label="User profile and options"
+        <div className="flex items-center justify-between gap-2 p-1">
+          <div className="flex items-center gap-2.5 overflow-hidden">
+            <Avatar className="h-8 w-8 shrink-0 rounded-lg border border-border">
+              <AvatarImage src={user.avatar} alt={user.name} />
+              <AvatarFallback className="rounded-lg text-xs font-semibold bg-orange-500/10 text-orange-600">
+                {user.name.substring(0, 2).toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
+            <div className="grid flex-1 text-left text-xs leading-tight overflow-hidden">
+              <span className="truncate font-semibold text-foreground">
+                {user.name}
+              </span>
+              <span className="truncate text-muted-foreground text-[11px]" title={user.email}>
+                {user.email}
+              </span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-1 shrink-0">
+            <ModeToggle />
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleSignOut}
+              className="h-8 w-8 rounded-lg text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-colors"
+              title="Sign out"
             >
-              <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user.avatar} alt={`${user.name}'s profile`} />
-                <AvatarFallback className="rounded-lg">
-                  {user.name
-                    .split(" ")
-                    .map((n) => n[0])
-                    .join("")
-                    .substring(0, 2)
-                    .toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">{user.name}</span>
-                <span className="truncate text-xs">{user.email}</span>
-              </div>
-              <ChevronsUpDown className="ml-auto size-4" aria-hidden="true" />
-            </SidebarMenuButton>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent
-            className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
-            side={isMobile ? "bottom" : "right"}
-            align="end"
-            sideOffset={4}
-            role="menu"
-            aria-label="User options"
-          >
-            <DropdownMenuLabel className="p-0 font-normal">
-              <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage
-                    src={user.avatar}
-                    alt={`${user.name}'s profile`}
-                  />
-                  <AvatarFallback className="rounded-lg">
-                    {user.name
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")
-                      .substring(0, 2)
-                      .toUpperCase()}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
-                </div>
-              </div>
-            </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem role="menuitem">
-                <Sparkles aria-hidden="true" />
-                Upgrade to Pro
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem role="menuitem">
-                <BadgeCheck aria-hidden="true" />
-                Account
-              </DropdownMenuItem>
-              <DropdownMenuItem role="menuitem">
-                <CreditCard aria-hidden="true" />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem role="menuitem">
-                <Bell aria-hidden="true" />
-                Notifications
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => signOut()} role="menuitem">
-              <LogOut aria-hidden="true" />
-              Log out
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+              <LogOut className="h-4 w-4" />
+              <span className="sr-only">Sign out</span>
+            </Button>
+          </div>
+        </div>
       </SidebarMenuItem>
     </SidebarMenu>
   );

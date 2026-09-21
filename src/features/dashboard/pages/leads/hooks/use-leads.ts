@@ -9,10 +9,19 @@ import {
 
 interface UseLeadsProps {
   initialLeads?: Lead[];
+  onlyReactivation?: boolean;
 }
 
-export function useLeads({ initialLeads = mockLeads }: UseLeadsProps = {}) {
+export function useLeads({
+  initialLeads = mockLeads,
+  onlyReactivation = false,
+}: UseLeadsProps = {}) {
+  const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
   const [filters, setFilters] = useState<LeadFilters>({
+    tag: "all",
+    channel: "all",
     status: "all",
     search: "",
     dateRange: {
@@ -21,8 +30,9 @@ export function useLeads({ initialLeads = mockLeads }: UseLeadsProps = {}) {
     },
   });
 
+  // Default sort: score descending per agent.md
   const [sorting, setSorting] = useState<SortingState>([
-    { id: "date", desc: true },
+    { id: "score", desc: true },
   ]);
 
   const [pagination, setPagination] = useState<PaginationState>({
@@ -30,8 +40,25 @@ export function useLeads({ initialLeads = mockLeads }: UseLeadsProps = {}) {
     pageSize: 10,
   });
 
+  const baseLeads = useMemo(() => {
+    if (onlyReactivation) {
+      return initialLeads.filter((l) => l.intelligence.reactivationCandidate);
+    }
+    return initialLeads;
+  }, [initialLeads, onlyReactivation]);
+
   const filteredLeads = useMemo(() => {
-    return initialLeads.filter((lead) => {
+    return baseLeads.filter((lead) => {
+      // Score Tag filter
+      if (filters.tag !== "all" && lead.tag !== filters.tag) {
+        return false;
+      }
+
+      // Channel filter
+      if (filters.channel !== "all" && lead.channel !== filters.channel) {
+        return false;
+      }
+
       // Status filter
       if (filters.status !== "all" && lead.status !== filters.status) {
         return false;
@@ -41,11 +68,18 @@ export function useLeads({ initialLeads = mockLeads }: UseLeadsProps = {}) {
       if (filters.search) {
         const searchLower = filters.search.toLowerCase();
         const searchableFields = [
-          lead.leadNumber,
-          lead.fullName,
+          lead.name,
+          lead.phoneNormalized,
+          lead.phoneRaw,
           lead.email,
-          lead.company,
-        ].map((field) => field.toLowerCase());
+          lead.leadNumber,
+          lead.intelligence.intentReason,
+          lead.intelligence.budgetFormatted || "",
+          ...lead.intelligence.preferredAreas,
+          lead.intelligence.revivalReason || "",
+        ]
+          .filter(Boolean)
+          .map((field) => field.toLowerCase());
 
         if (!searchableFields.some((field) => field.includes(searchLower))) {
           return false;
@@ -65,73 +99,52 @@ export function useLeads({ initialLeads = mockLeads }: UseLeadsProps = {}) {
 
       return true;
     });
-  }, [initialLeads, filters]);
+  }, [baseLeads, filters]);
 
-  // For TanStack table, we need to handle pagination and sorting separately
+  // Handle sorting and pagination
   const paginatedAndSortedLeads = useMemo(() => {
-    // Early return if no filters
     if (filteredLeads.length === 0) return [];
 
-    // Skip sorting if no sort criteria
     if (sorting.length === 0) {
-      // Just apply pagination
       const startIdx = pagination.pageIndex * pagination.pageSize;
       const endIdx = startIdx + pagination.pageSize;
       return filteredLeads.slice(startIdx, endIdx);
     }
 
-    // Create a sorting function that makes comparisons based on field type
-    const compareValues = (
-      a: number | string | Date,
-      b: number | string | Date,
-      desc: boolean
-    ): number => {
-      const direction = desc ? -1 : 1;
+    const sortedLeads = [...filteredLeads].sort((a, b) => {
+      for (const sort of sorting) {
+        const desc = sort.desc;
+        const direction = desc ? -1 : 1;
 
-      // Handle different value types
-      if (a === b) return 0;
+        if (sort.id === "score") {
+          return (a.score - b.score) * direction;
+        }
 
-      // Handle null/undefined values
-      if (a == null) return direction;
-      if (b == null) return -direction;
-
-      // Check if values are dates (try to detect ISO strings)
-      if (typeof a === "string" && typeof b === "string") {
-        // ISO date format detection (more reliable than checking for "T")
-        const isDateA = /^\d{4}-\d{2}-\d{2}(T|\s)/.test(a);
-        const isDateB = /^\d{4}-\d{2}-\d{2}(T|\s)/.test(b);
-
-        if (isDateA && isDateB) {
-          const dateA = new Date(a).getTime();
-          const dateB = new Date(b).getTime();
+        if (sort.id === "date") {
+          const dateA = new Date(a.date).getTime();
+          const dateB = new Date(b.date).getTime();
           return (dateA - dateB) * direction;
         }
 
-        // Regular string comparison
-        return a.localeCompare(b) * direction;
-      }
+        if (sort.id === "name") {
+          return a.name.localeCompare(b.name) * direction;
+        }
 
-      // Number comparison
-      if (typeof a === "number" && typeof b === "number") {
-        return (a - b) * direction;
-      }
+        if (sort.id === "phoneNormalized") {
+          return a.phoneNormalized.localeCompare(b.phoneNormalized) * direction;
+        }
 
-      // Default comparison (converts to string)
-      return String(a).localeCompare(String(b)) * direction;
-    };
+        if (sort.id === "channel") {
+          return a.channel.localeCompare(b.channel) * direction;
+        }
 
-    // Apply sorting
-    const sortedLeads = [...filteredLeads].sort((a, b) => {
-      // Handle multi-sorting using sortingState array
-      for (const sort of sorting) {
-        const key = sort.id as keyof Lead;
-        const compared = compareValues(a[key], b[key], sort.desc);
-        if (compared !== 0) return compared;
+        if (sort.id === "status") {
+          return a.status.localeCompare(b.status) * direction;
+        }
       }
       return 0;
     });
 
-    // Apply pagination
     const startIdx = pagination.pageIndex * pagination.pageSize;
     const endIdx = startIdx + pagination.pageSize;
     return sortedLeads.slice(startIdx, endIdx);
@@ -139,7 +152,6 @@ export function useLeads({ initialLeads = mockLeads }: UseLeadsProps = {}) {
 
   const updateFilters = (newFilters: Partial<LeadFilters>) => {
     setFilters((prev) => ({ ...prev, ...newFilters }));
-    // Reset to first page when filters change
     setPagination((prev) => ({ ...prev, pageIndex: 0 }));
   };
 
@@ -163,6 +175,8 @@ export function useLeads({ initialLeads = mockLeads }: UseLeadsProps = {}) {
 
   const handleClearFilters = () => {
     setFilters({
+      tag: "all",
+      channel: "all",
       status: "all",
       search: "",
       dateRange: { from: undefined, to: undefined },
@@ -170,21 +184,25 @@ export function useLeads({ initialLeads = mockLeads }: UseLeadsProps = {}) {
     setPagination((prev) => ({ ...prev, pageIndex: 0 }));
   };
 
+  const handleOpenLeadModal = (lead: Lead) => {
+    setSelectedLead(lead);
+    setIsModalOpen(true);
+  };
+
   return {
-    // Raw filtered leads (no pagination applied)
     allLeads: filteredLeads,
-    // Leads with pagination and sorting applied
     leads: paginatedAndSortedLeads,
-    // Total count for pagination
     pageCount: Math.ceil(filteredLeads.length / pagination.pageSize),
-    // States
     filters,
     sorting,
     pagination,
-    // Update handlers
+    selectedLead,
+    isModalOpen,
+    setIsModalOpen,
+    handleOpenLeadModal,
     updateFilters,
     handleSortingChange,
     handlePaginationChange,
     handleClearFilters,
   };
-} 
+}
