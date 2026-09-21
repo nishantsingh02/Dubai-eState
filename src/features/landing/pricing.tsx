@@ -137,7 +137,7 @@ const tiers = [
       "Standard support",
     ],
     cta: "Start Free Trial",
-    href: "/signup",
+    href: "/login",
     popular: false,
   },
   {
@@ -154,7 +154,7 @@ const tiers = [
       "Priority email support",
     ],
     cta: "Start Free Trial",
-    href: "/signup",
+    href: "/login",
     popular: true,
   },
   {

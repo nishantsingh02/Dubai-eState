@@ -137,7 +137,7 @@ export function Hero() {
             ></div>
 
             <CTAButton
-              href="/signup"
+              href="/login"
               icon={<ArrowRight className="h-4 w-4" aria-hidden="true" />}
             >
               IMPORT YOUR LEADS FREE

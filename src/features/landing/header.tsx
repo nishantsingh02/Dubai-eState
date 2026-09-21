@@ -93,7 +93,7 @@ export function Header() {
                     Login
                   </Button>
                 </Link>
-                <Link href="/signup">
+                <Link href="/login">
                   <Button className="bg-orange-500 hover:bg-orange-600 text-white px-4 font-medium tracking-wide rounded-full">
                     Start Free Trial
                   </Button>
@@ -159,7 +159,7 @@ export function Header() {
                     Login
                   </Button>
                 </Link>
-                <Link href="/signup" className="w-full">
+                <Link href="/login" className="w-full">
                   <Button
                     className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium tracking-wide"
                     onClick={() => setIsMenuOpen(false)}
