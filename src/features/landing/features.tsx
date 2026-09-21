@@ -175,7 +175,7 @@ export function Features() {
                 WHY AI SCORING WORKS FOR DUBAI REAL ESTATE
               </h3>
               <p className="text-muted-foreground mt-4 text-lg">
-                PropEase's AI is trained on Dubai-specific intent signals — not generic CRM data.
+                PropEase&apos;s AI is trained on Dubai-specific intent signals — not generic CRM data.
                 It scores on what actually predicts a sale: stated budget in AED, area specificity
                 (Marina vs JVC vs Palm), off-plan vs secondary preference, timeline urgency, and
                 engagement responsiveness. Every score comes with a 1–2 sentence reason your broker

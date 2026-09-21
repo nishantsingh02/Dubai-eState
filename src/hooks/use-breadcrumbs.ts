@@ -29,7 +29,7 @@ export function useBreadcrumbs() {
     if (pathname.startsWith("/dashboard")) {
       result.push({
         label: "PropEase",
-        href: "/dashboard/leads",
+        href: "/dashboard",
         isCurrent: pathname === "/dashboard",
       });
 

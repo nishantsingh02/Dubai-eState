@@ -137,13 +137,13 @@ export function Hero() {
             ></div>
 
             <CTAButton
-              href="/dashboard/import"
+              href="/signup"
               icon={<ArrowRight className="h-4 w-4" aria-hidden="true" />}
             >
               IMPORT YOUR LEADS FREE
             </CTAButton>
 
-            <CTAButton variant="outline" href="/dashboard/leads">VIEW LIVE DASHBOARD</CTAButton>
+            <CTAButton variant="outline" href="/login">VIEW LIVE DASHBOARD</CTAButton>
           </div>
 
           <p className="text-muted-foreground mt-4 text-sm">

@@ -42,7 +42,7 @@ const navigation = {
     { name: "Features", href: "#features" },
     { name: "Pricing", href: "#pricing" },
     { name: "Agency Stories", href: "#testimonials" },
-    { name: "Live Dashboard", href: "/dashboard/leads" },
+    { name: "Live Dashboard", href: "/login" },
   ],
   company: [
     { name: "About", href: "#" },
@@ -125,7 +125,7 @@ export function Footer() {
               </span>
             </div>
             <p className="text-muted-foreground text-base">
-              Dubai's AI-powered lead intelligence platform. Score every inquiry.
+              Dubai&apos;s AI-powered lead intelligence platform. Score every inquiry.
               Revive every dormant lead. Close more deals.
             </p>
             <div className="flex space-x-5">

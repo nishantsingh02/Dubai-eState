@@ -24,8 +24,10 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
+import { useUser } from "@/hooks/use-user";
 
 export function SettingsPage() {
+  const { name: userName, email: userEmail, initials: userInitials } = useUser();
   const [saved, setSaved] = useState(false);
 
   // Agency Profile
@@ -238,11 +240,11 @@ export function SettingsPage() {
             <div className="flex items-center justify-between py-3">
               <div className="flex items-center gap-3">
                 <div className="flex size-8 items-center justify-center rounded-lg bg-orange-500 text-white font-bold text-xs">
-                  TM
+                  {userInitials}
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-foreground">Tariq Mansoor (You)</p>
-                  <p className="text-[11px] text-muted-foreground">tariq@apexrealty.ae</p>
+                  <p className="text-xs font-bold text-foreground">{userName} (You)</p>
+                  <p className="text-[11px] text-muted-foreground">{userEmail}</p>
                 </div>
               </div>
               <Badge variant="outline" className="text-[11px] bg-orange-500/10 text-orange-600 border-orange-500/20">

@@ -88,12 +88,12 @@ export function Header() {
 
               {/* Desktop CTA */}
               <div className="hidden items-center gap-3 md:flex">
-                <Link href="/dashboard/leads">
+                <Link href="/login">
                   <Button variant="ghost" className="font-medium tracking-wide">
                     Login
                   </Button>
                 </Link>
-                <Link href="/dashboard/import">
+                <Link href="/signup">
                   <Button className="bg-orange-500 hover:bg-orange-600 text-white px-4 font-medium tracking-wide rounded-full">
                     Start Free Trial
                   </Button>
@@ -150,7 +150,7 @@ export function Header() {
                 );
               })}
               <div className="border-border/50 mt-6 grid grid-cols-2 gap-3 border-t pt-6">
-                <Link href="/dashboard/leads" className="w-full">
+                <Link href="/login" className="w-full">
                   <Button
                     variant="outline"
                     className="w-full font-medium tracking-wide"
@@ -159,7 +159,7 @@ export function Header() {
                     Login
                   </Button>
                 </Link>
-                <Link href="/dashboard/import" className="w-full">
+                <Link href="/signup" className="w-full">
                   <Button
                     className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium tracking-wide"
                     onClick={() => setIsMenuOpen(false)}

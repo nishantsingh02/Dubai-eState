@@ -14,7 +14,7 @@ export const mockLeads: Lead[] = [
     status: "active",
     date: "2026-03-28T09:15:00Z",
     sourceType: "new",
-    assignedAgent: "Tariq Mansoor",
+    assignedAgent: "Rashid Al-Falasi",
     intelligence: {
       budgetAed: 18500000,
       budgetFormatted: "AED 18,500,000",
@@ -49,7 +49,7 @@ export const mockLeads: Lead[] = [
     status: "scheduled",
     date: "2026-03-28T08:30:00Z",
     sourceType: "new",
-    assignedAgent: "Tariq Mansoor",
+    assignedAgent: "Rashid Al-Falasi",
     intelligence: {
       budgetAed: 6200000,
       budgetFormatted: "AED 6,200,000",
@@ -116,7 +116,7 @@ export const mockLeads: Lead[] = [
     status: "negotiating",
     date: "2026-03-27T14:10:00Z",
     sourceType: "new",
-    assignedAgent: "Tariq Mansoor",
+    assignedAgent: "Rashid Al-Falasi",
     intelligence: {
       budgetAed: 8900000,
       budgetFormatted: "AED 8,900,000",

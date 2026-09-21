@@ -137,7 +137,7 @@ const tiers = [
       "Standard support",
     ],
     cta: "Start Free Trial",
-    href: "/dashboard/import",
+    href: "/signup",
     popular: false,
   },
   {
@@ -154,7 +154,7 @@ const tiers = [
       "Priority email support",
     ],
     cta: "Start Free Trial",
-    href: "/dashboard/import",
+    href: "/signup",
     popular: true,
   },
   {
@@ -172,7 +172,7 @@ const tiers = [
       "Custom AI scoring parameters",
     ],
     cta: "Contact Sales",
-    href: "/dashboard/leads",
+    href: "/login",
     popular: false,
   },
 ];
@@ -222,7 +222,7 @@ export function Pricing() {
             PropEase is a scoring and prioritization layer — not a replacement for your existing
             tools. Import leads from any source, score them, and push priorities back to your team.
           </p>
-          <Link href="/dashboard/leads">
+          <Link href="/login">
             <Button
               className="mt-8 h-14 px-8 font-semibold tracking-wide"
               size="lg"

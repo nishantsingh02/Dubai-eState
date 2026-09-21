@@ -67,8 +67,8 @@ export function Breadcrumbs({
         )}
 
         {/* Dynamic breadcrumbs */}
-        {breadcrumbs.map((crumb) => (
-          <BreadcrumbItem key={crumb.href}>
+        {breadcrumbs.map((crumb, index) => (
+          <BreadcrumbItem key={`${crumb.href}-${index}`}>
             {!crumb.isCurrent ? (
               <>
                 <BreadcrumbLink asChild>

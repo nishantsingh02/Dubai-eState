@@ -100,7 +100,7 @@ const testimonials = [
   {
     quote:
       "Before PropEase, I was calling 30 leads a day blind. Now I call 8 — and I'm closing twice as many deals. The AI score is spot on for Dubai buyers. A hot lead is genuinely hot.",
-    author: "Tariq Mansoor",
+    author: "Rashid Al-Falasi",
     role: "Principal Broker, Apex Realty Dubai",
     avatar: "/avatars/avatar.png",
   },

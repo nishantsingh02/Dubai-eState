@@ -11,8 +11,8 @@ export const sidebarMenus = {
     tagline: "Lead Intelligence",
   },
   user: {
-    name: "Tariq Mansoor",
-    email: "tariq@apexrealty.ae",
+    name: "Agent",
+    email: "agent@propease.ae",
     avatar: "/avatars/avatar.png",
     workspace: "Apex Real Estate Dubai",
   },

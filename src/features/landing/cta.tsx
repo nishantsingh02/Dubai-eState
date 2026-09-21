@@ -76,13 +76,13 @@ export function CTA() {
                   <div className="border-primary/30 absolute -right-4 -bottom-4 h-4 w-4 border-r-2 border-b-2" aria-hidden="true"></div>
                   
                   <CTAButton
-                    href="/dashboard/import"
+                    href="/signup"
                     icon={<ArrowRight className="h-4 w-4" aria-hidden="true" />}
                   >
                     IMPORT YOUR LEADS FREE
                   </CTAButton>
                   
-                  <CTAButton variant="outline" href="/dashboard/leads">VIEW LIVE DASHBOARD</CTAButton>
+                  <CTAButton variant="outline" href="/login">VIEW LIVE DASHBOARD</CTAButton>
                 </div>
                 <p className="text-muted-foreground mt-6 text-center text-sm">
                   No credit card required • Works with any existing lead spreadsheet
