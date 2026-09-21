@@ -53,11 +53,12 @@ export async function signup(formData: FormData) {
 }
 
 /**
- * Server Action: Sign out the current user
+ * Server Action: Sign out the current user and clear server cookies
  */
 export async function logout() {
-  const supabase = await createClient();
-  await supabase.auth.signOut();
-  revalidatePath("/", "layout");
-  redirect("/login");
+  try {
+    const supabase = await createClient();
+    await supabase.auth.signOut();
+  } catch {}
+  return { success: true };
 }

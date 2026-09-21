@@ -64,19 +64,19 @@ const navigation = {
   social: [
     {
       name: "X",
-      href: "https://x.com/KaraBharat",
+      href: "https://x.com//",
       openInNewTab: true,
       icon: XIcon,
     },
     {
       name: "GitHub",
-      href: "https://github.com/KaraBharat/shadcn-crm-dashboard",
+      href: "https://github.com///shadcn-crm-dashboard",
       openInNewTab: true,
       icon: GitHubIcon,
     },
     {
       name: "LinkedIn",
-      href: "https://www.linkedin.com/in/kara-bharat/",
+      href: "https://www.linkedin.com/in/",
       openInNewTab: true,
       icon: LinkedInIcon,
     },

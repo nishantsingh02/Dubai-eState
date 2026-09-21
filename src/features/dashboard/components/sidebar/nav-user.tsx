@@ -1,6 +1,6 @@
 "use client";
 
-import { useTransition } from "react";
+import { useState } from "react";
 import { LogOut, Loader2 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -26,7 +26,7 @@ export function NavUser({
 }) {
   const { state } = useSidebar();
   const isCollapsed = state === "collapsed";
-  const [isPending, startTransition] = useTransition();
+  const [isPending, setIsPending] = useState(false);
   const authUser = useUser();
 
   const name = authUser.name || initialUser?.name || "Agent";
@@ -34,14 +34,17 @@ export function NavUser({
   const avatar = authUser.avatar || initialUser?.avatar || "/avatars/avatar.png";
   const initials = authUser.initials;
 
-  const handleSignOut = () => {
-    startTransition(async () => {
-      try {
-        const supabase = createClient();
-        await supabase.auth.signOut();
-      } catch {}
+  const handleSignOut = async () => {
+    setIsPending(true);
+    try {
+      const supabase = createClient();
+      await supabase.auth.signOut();
       await logout();
-    });
+    } catch {
+      // Ignore network errors on sign out
+    } finally {
+      window.location.href = "/login";
+    }
   };
 
   if (isCollapsed) {
@@ -58,7 +61,7 @@ export function NavUser({
           size="icon"
           onClick={handleSignOut}
           disabled={isPending}
-          className="h-8 w-8 text-muted-foreground hover:text-destructive"
+          className="h-8 w-8 text-muted-foreground hover:text-destructive cursor-pointer"
           title="Sign out"
         >
           {isPending ? (
@@ -99,7 +102,7 @@ export function NavUser({
               size="icon"
               onClick={handleSignOut}
               disabled={isPending}
-              className="h-8 w-8 rounded-lg text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-colors"
+              className="h-8 w-8 rounded-lg text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-colors cursor-pointer"
               title="Sign out"
             >
               {isPending ? (
